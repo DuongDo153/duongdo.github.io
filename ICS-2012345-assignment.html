@@ -1,0 +1,931 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Do Anh Duong - Portfolio</title>
+
+  <style>
+    /* =========================
+       Base & Variables
+    ========================= */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: Arial, sans-serif;
+      scroll-behavior: smooth;
+    }
+    :root {
+      --header-h: 65px;           
+      --brand: #090C9B;
+      --accent: #f6c90e;
+      --bg-soft: #f9f9f9;
+      --text: #333;
+    }
+    body {
+      color: var(--text);
+      background: #fff;
+      line-height: 1.6;
+    }
+    section {                      
+      scroll-margin-top: var(--header-h);
+    }
+
+    /* =========================
+       Header (Fixed, Hide-on-Scroll)
+    ========================= */
+    header {
+      position: fixed;
+      top: 0; left: 0;
+      width: 100%;
+      z-index: 100;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 12px 60px;
+      background: #fff;
+      box-shadow: 0 1px 4px rgba(0,0,0,.05);
+      transition: transform .4s ease, background .3s;
+    }
+    header.hidden { transform: translateY(-100%); }
+
+    .logo {
+      font-size: 25px;
+      font-weight: 700;
+      color: var(--brand);
+      white-space: nowrap;
+    }
+    nav ul {
+      display: flex;
+      list-style: none;
+      gap: 25px;
+    }
+    nav a {
+      text-decoration: none;
+      color: var(--text);
+      font-size: 14px;
+      transition: color .3s;
+    }
+    nav a:hover { color: var(--accent); }
+
+    /* =========================
+       Hero
+    ========================= */
+    .hero {
+      position: relative;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      min-height: 90vh;
+      background: var(--bg-soft);
+      overflow: hidden;
+
+      margin-top: var(--header-h);           
+      padding: 140px 60px 80px;
+      padding-right: clamp(34vw, 48vw, 52vw); 
+    }
+    .hero-text {
+      position: relative;
+      z-index: 2;
+      max-width: 500px;
+      margin-left: 30px;
+    }
+    .hero-text h3 {
+      font-size: 18px;
+      color: #777;
+    }
+    .hero-text h1 {
+      font-size: 48px;
+      margin: 10px 0;
+      color: var(--text);
+    }
+    .hero-text span { color: var(--brand); }
+    .hero-text p {
+      margin: 10px 0 20px;
+      color: #555;
+    }
+    .hero-text button {
+      margin-top: 70px;
+      padding: 12px 28px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-weight: 600;
+      color: #fff;
+      background: var(--accent);
+      transition: background .3s;
+    }
+    .hero-text button:hover { background: #e5b80c; }
+
+    .hero-img {
+      position: absolute;
+      top: 0; right: 0;
+      z-index: 1;
+      width: clamp(520px, 48vw, 760px);   
+      height: 100%;
+    }
+    .hero-img img {
+      width: 100%; height: 100%;
+      display: block;
+      object-fit: cover;
+      object-position: right center;
+      border: 0; box-shadow: none;
+    }
+    /* Fade nhẹ để chữ đọc rõ hơn */
+    .hero-img::before {
+      content: "";
+      position: absolute; inset: 0;
+      background: linear-gradient(
+        to right,
+        rgba(249,249,249,1) 0%,
+        rgba(249,249,249,.85) 10%,
+        rgba(249,249,249,.35) 28%,
+        rgba(249,249,249,0) 45%
+      );
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* =========================
+       About
+    ========================= */
+    .about {
+      padding: 80px 60px;
+      background: #fff;
+      text-align: center;
+    }
+    .about h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: var(--brand);
+    }
+    .about p {
+      max-width: 700px;
+      margin: 0 auto;
+      color: #555;
+      line-height: 1.8;
+      text-align: justify;
+    }
+    .about-buttons {
+      margin-top: 30px;
+      display: flex;
+      gap: 12px;
+      justify-content: center;
+      flex-wrap: wrap;
+    }
+    .about-buttons button {
+      padding: 10px 25px;
+      border-radius: 5px;
+      border: 2px solid var(--accent);
+      background: #fff;
+      color: var(--accent);
+      cursor: pointer;
+      font-weight: 600;
+      transition: all .3s;
+    }
+    .about-buttons button:hover {
+      background: var(--accent);
+      color: #fff;
+    }
+	.timeline{
+	  max-width: 920px;
+	  margin: 12px auto 0;
+	  position: relative;
+	}
+
+	.t-item{
+	  display: grid;
+	  grid-template-columns: 110px 1fr;
+	  column-gap: 24px;
+	  align-items: start;
+	  position: relative;
+	  margin-bottom: 28px;
+	}
+
+	.t-year{
+	  font-weight: 800;
+	  font-size: 24px;
+	  color: var(--accent);
+	  position: sticky;
+	  top: calc(var(--header-h) + 12px);
+	  background: #fff;
+	  padding: 4px 0;
+	}
+
+	.t-content{
+	  position: relative;
+	  padding-left: 26px;                 
+	  border-left: 2px solid #e9e9e9;     
+	}
+	.t-content::before{
+	  content: "";
+	  position: absolute;
+	  left: -7px; top: 6px;
+	  width: 12px; height: 12px;
+	  border-radius: 50%;
+	  background: var(--accent);
+	  box-shadow: 0 0 0 4px #fff;      
+	}
+
+	.t-card{
+	  background: #fff;
+	  border-radius: 12px;
+	  box-shadow: 0 6px 14px rgba(0,0,0,.08);
+	  padding: 14px 16px;
+	  margin-bottom: 16px;
+	}
+	.t-card time{
+	  display: inline-block;
+	  font-size: 12px;
+	  color: #777;
+	  letter-spacing: .3px;
+	}
+	.t-card h4{
+	  margin: 6px 0 6px;
+	  font-size: 16px;
+	  color: var(--text);
+	}
+	.t-card p{
+	  color: #555;
+	  text-align: center;
+	}
+	
+	.reveal{ opacity: 0; transform: translateY(12px); transition: .5s ease; }
+	.reveal.is-visible{ opacity: 1; transform: none; }
+
+	.skills {
+		padding: 80px 60px;
+		background: var(--bg-soft);
+		text-align: center;
+	}
+
+	.skill-grid{
+		display: grid;
+		grid-template-columns: repeat(3, minmax(220px, 1fr));
+		gap: 24px;
+		max-width: 1100px;
+		margin: 0 auto;
+	}
+
+
+	.skill-card{
+		position: relative;
+		background: #fff;                     
+		border: 1px solid rgba(255,255,255,.06);
+		border-radius: 14px;
+		padding: 34px 22px;
+		color: #cfd3dc;
+		box-shadow: 0 10px 18px rgba(0,0,0,.10);
+		overflow: hidden;
+		transition: transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+	}
+	.skill-card:hover{
+		transform: translateY(-6px);
+		box-shadow: 0 18px 30px rgba(0,0,0,.18);
+		border-color: rgba(255,255,255,.16);
+	}
+
+	.skill-icon{
+	  width: 64px; height: 64px;
+	  margin: 0 auto 14px;
+	  display: grid; place-items: center;
+	  border-radius: 50%;
+	  background: #f6c90e;
+	  outline: 2px solid rgba(255,255,255,.06);
+	}
+	.skill-icon svg{
+	  width: 32px; height: 32px;
+	  fill: #fff;                      /* điểm nhấn theo theme */
+	}
+
+	/* tiêu đề/ mô tả */
+	.skill-title{
+	  font-weight: 800;
+	  letter-spacing: .2px;
+	  color: #333;
+	}
+	.skill-card::after{
+	  content:"";
+	  position:absolute; inset:0;
+	  border-radius: 14px;
+	  pointer-events:none;
+	  box-shadow: 0 0 0 0 rgba( var(--accent-r,246), var(--accent-g,201), var(--accent-b,14), .0);
+	  transition: box-shadow .35s ease;
+	}
+	.skill-card:hover::after{
+	  box-shadow: 0 0 0 2px rgba(255,255,255,.10), 0 0 30px 2px rgba(246,201,14,.25);
+	}
+
+    /* =========================
+       Projects / Carousel
+    ========================= */
+    .works {
+      padding: 80px 60px;
+      background: var(--bg-soft);
+      text-align: center;
+    }
+    .works h2 {
+      font-size: 32px;
+      margin-bottom: 20px;
+      color: var(--brand);
+    }
+
+    .carousel {
+      display: flex;
+      gap: 28px;
+      padding: 24px 8vw 36px;
+      overflow-x: auto;
+      scroll-snap-type: x mandatory;
+      scroll-snap-stop: always;
+      scroll-behavior: smooth;
+      -ms-overflow-style: none;      /* Edge/IE */
+      scrollbar-width: none;         /* Firefox */
+      /* FIX snap lệch khi có padding: */
+      scroll-padding-inline: 8vw;    /* khớp với padding ngang ở trên */
+    }
+    .carousel::-webkit-scrollbar { display: none; } /* Chrome */
+
+    .slide {
+      flex: 0 0 28vw;
+      max-width: 420px;
+      min-width: 280px;
+      background: #fff;
+      border-radius: 14px;
+      text-align: center;
+      box-shadow: 0 10px 18px rgba(0,0,0,.08);
+      scroll-snap-align: center;
+      transform: scale(.9);
+      transition: transform .4s, box-shadow .4s;
+    }
+    .slide.active {
+      transform: scale(1.08);
+      box-shadow: 0 16px 24px rgba(0,0,0,.12);
+    }
+    .slide img {
+      width: 100%;
+      height: 220px;
+      object-fit: cover;
+      display: block;
+      border-top-left-radius: 14px;
+      border-top-right-radius: 14px;
+    }
+    .slide h4 {
+      padding: 16px 18px 22px;
+      font-size: 18px;
+      color: var(--text);
+      font-weight: 700;
+    }
+	/* =========================
+	   Contact
+	========================= */
+	.contact {
+	  padding: 80px 60px;
+	  background: #fff;
+	  text-align: center;
+	}
+	.contact h2 {
+	  font-size: 32px;
+	  color: var(--brand);
+	  margin-bottom: 10px;
+	}
+	.contact p {
+	  color: #555;
+	  margin-bottom: 30px;
+	}
+	.contact-info {
+	  flex: 1;
+	  min-width: 250px;
+	  text-align: center;
+	}
+	.contact-info p {
+	  margin-bottom: 10px;
+	  color: #333;
+	}
+	.contact-info a {
+	  color: var(--brand);
+	  text-decoration: none;
+	}
+	.contact-info a:hover {
+	  text-decoration: underline;
+	}
+
+	@media (max-width: 768px) {
+	  .contact-container {
+		flex-direction: column;
+		align-items: center;
+	  }
+	  .contact-info {
+		text-align: center;
+	  }
+	}
+	/* ===== Notebook ===== */
+	.notebook{
+	  padding: 80px 60px;
+	  background: var(--bg-soft);
+	}
+	.notebook h2{
+	  font-size: 32px; color: var(--brand, #090C9B);
+	  margin-bottom: 8px;
+	  text-align: center;
+	}
+	.notebook p{ color:#555; margin-bottom:18px; }
+
+	.nb-input textarea{
+	  width: 100%;
+	  resize: vertical;
+	  padding: 12px 14px;
+	  border: 1.5px solid #ccc;
+	  border-radius: 8px;
+	  font-size: 14px;
+	  outline: none;
+	  transition: border .2s;
+	}
+	.nb-input textarea:focus{ border-color: var(--brand, #090C9B); }
+
+	.nb-actions{
+	  display:flex; align-items:center; gap:12px;
+	  margin-top: 10px;
+	}
+	.nb-actions button{
+	  padding: 10px 18px;
+	  border: none; border-radius: 6px;
+	  background: var(--accent, #f6c90e);
+	  color:#fff; font-weight:600; cursor:pointer;
+	  transition: background .25s;
+	}
+	.nb-actions button:hover{ background:#e5b80c; }
+	.nb-hint{ color:#777; font-size: 12px; }
+
+	.nb-subtitle{ margin: 22px 0 10px; color:#333; }
+	.nb-list{ display:flex; flex-direction:column; gap:10px; }
+
+	.note{
+	  background: var(--bg-soft, #f9f9f9);
+	  border: 1px solid #ececec;
+	  border-radius: 10px;
+	  padding: 12px 14px;
+	  color:#333;
+	  box-shadow: 0 4px 10px rgba(0,0,0,.04);
+	  word-wrap: break-word;
+	}
+
+	/* mobile */
+	@media (max-width: 768px){
+	  .notebook{ padding: 60px 20px; }
+	}
+
+    /* =========================
+       Footer
+    ========================= */
+    footer {
+      background: var(--brand);
+      color: var(--accent);
+      text-align: center;
+      padding: 12px;
+      font-size: 14px;
+    }
+
+  </style>
+</head>
+
+<body>
+  <!-- =========================
+       Header
+  ========================= -->
+  <header id="mainHeader">
+    <div class="logo">DuongDo</div>
+    <nav aria-label="Primary">
+      <ul>
+        <li><a href="#home">Home</a></li>
+        <li><a href="#about">About Me</a></li>
+        <li><a href="#works">Projects</a></li>
+        <li><a href="#contact">Contact</a></li>
+		<li><a href="#notebook">Notebook</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <!-- =========================
+       Hero
+  ========================= -->
+  <section id="home" class="hero">
+    <div class="hero-text">
+      <h3>Hello</h3>
+      <h1>I'm <span>Do Anh Duong</span></h1>
+      <p>A Sophomore student at Fulbright University Vietnam</p>
+      <button id="hireBtn" type="button">About Me</button>
+    </div>
+
+    <div class="hero-img" aria-hidden="true">
+      <img src="images/1.png" alt="Profile photo"/>
+    </div>
+  </section>
+
+  <!-- =========================
+       About
+  ========================= -->
+  <section id="about" class="about">
+    <h2>About Me</h2>
+    <p>
+      I am currently a second-year student majoring in Psychology at Fulbright University Vietnam.
+      I am a motivated and responsible person with a passion to learn and grow. I have good
+      communication skills, adaptability, and a strong ability to work effectively in groups. I have
+      experience in being engaged in various clubs and extracurricular activities across different
+      roles, including Media, Event Planning, Human Resources, and Logistics.
+    </p><br>
+	<h2>My Milestones</h2>
+  <div class="timeline">
+  <!-- 2025 -->
+  <article class="t-item reveal">
+    <div class="t-year">2028</div>
+    <div class="t-content">
+      <div class="t-card">
+        <time>2024 - 2028</time>
+        <h4>Fulbright University Vietnam</h4>
+		<p> Class of 2028</p>
+      </div>
+	  <div class="t-card">
+        <time>2024 - 2028</time>
+        <h4>Dean Scholarship</h4>
+      </div>
+	  <div class="t-card">
+        <time>2024 - 2025</time>
+        <h4>Fulbright Student Council</h4>
+      </div>
+	  <div class="t-card">
+        <time>2025 - 2026</time>
+        <h4>Event & Engagement Assistant of Fulbright Admissions Team</h4>
+      </div>
+    </div>
+  </article>
+
+  <article class="t-item reveal">
+    <div class="t-year">2024</div>
+    <div class="t-content">
+      <div class="t-card">
+        <time>2021 - 2024</time>
+        <h4>Le Hong Phong High School for the Gifted</h4>
+        <p>
+		   Major: Literature
+		</p>
+      </div>
+	  <div class="t-card">
+        <time>03/2024</time>
+        <h4>Third Prize, City-level Excellent Student Competition for Geography</h4>
+      </div>
+	  <div class="t-card">
+        <time>2021 - 2024</time>
+        <h4>3-year Merit Scholarship for High School Specialization</h4>
+      </div>
+	  <div class="t-card">
+        <time>01/2024</time>
+        <h4>IELTS: 7.0</h4>
+      </div>
+	  <div class="t-card">
+        <time>2022 - 2024</time>
+        <h4>Festival Lê Hồng Phong</h4>
+      </div>
+	  <div class="t-card">
+        <time>2022 - 2025</time>
+        <h4>Kỹ Năng Cộng Club</h4>
+      </div>
+	  <div class="t-card">
+        <time>2022 - 2024</time>
+        <h4>Broadcasting Team of LHP Specialized School</h4>
+      </div>
+	  <div class="t-card">
+        <time>2022 - 2025</time>
+        <h4>Vươn lên - Orientation Camp</h4>
+      </div>
+    </div>
+  </article>
+
+  <article class="t-item reveal">
+    <div class="t-year">2021</div>
+    <div class="t-content">
+      <div class="t-card">
+        <time>2017 - 2021</time>
+        <h4>Tran Dai Nghia High School for the Gifted</h4>
+      </div>
+	  <div class="t-card">
+        <time>01/2020</time>
+        <h4>First Prize, School-level Scientific Research Competition<br>Third Prize, City-level Scientific Research Competition</h4>
+      </div>
+	  <div class="t-card">
+        <time>08/2019</time>
+        <h4>Two Special Prizes, School-level "Creative Ideas" Competition</h4>
+      </div>
+	  <div class="t-card">
+        <time>2019 - 2022</time>
+        <h4>English Club of Tran Dai Nghia High School for the Gifted</h4>
+      </div>
+	  <div class="t-card">
+        <time>2020 - 2021</time>
+        <h4>SUGAR Vietnam - Đường Đến Tri Thức</h4>
+      </div>
+	  <div class="t-card">
+        <time>2019 - 2021</time>
+        <h4>Vietnamese Culture Club of Tran Dai Nghia High School for the Gifted</h4>
+      </div>
+    </div>
+  </article>
+  <article class="t-item reveal">
+    <div class="t-year">2017</div>
+	<div class="t-content">
+	</div>
+  </article
+	</div>
+	<h2>My Skills</h2>
+	<div class="skill-grid">
+	  <div class="skill-card">
+		<div class="skill-icon" aria-hidden="true">
+		  <svg viewBox="0 0 24 24"><path d="M20 2H4a2 2 0 0 0-2 2v10l4-3h14a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2z"/><path d="M18 9v5a2 2 0 0 1-2 2H8l-4 3v-8"/></svg>
+		</div>
+		<div class="skill-title">Communication</div>
+	  </div>
+
+	  <div class="skill-card">
+		<div class="skill-icon" aria-hidden="true">
+		  <svg viewBox="0 0 24 24"><path d="M16 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6zM8 11a3 3 0 1 0 0-6 3 3 0 0 0 0 6z"/><path d="M2 18v-1.5C2 14.2 6.3 13 8 13s6 1.2 6 3.5V18H2z"/><path d="M16 13c-1 0-2 .1-3 .4 1.7.9 3 2.2 3 4.1V18h7v-1.5c0-2.3-4.3-3.5-7-3.5z"/></svg>
+		</div>
+		<div class="skill-title">Teamwork</div>
+	  </div>
+
+	  <div class="skill-card">
+		<div class="skill-icon" aria-hidden="true">
+		  <svg viewBox="0 0 24 24"><path d="M12 2a8 8 0 0 0-8 8c0 2.5 1.2 4.8 3 6.2V18a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1v-1.8c1.8-1.4 3-3.7 3-6.2a8 8 0 0 0-8-8zM9 20h6v2H9z"/></svg>
+		</div>
+		<div class="skill-title">Problem-solving</div>
+	  </div>
+
+	  <div class="skill-card">
+		<div class="skill-icon" aria-hidden="true">
+		  <svg viewBox="0 0 24 24"><path d="M22.7 19.3 16.3 13.9a5 5 0 1 0-3.3 3.3l6.4 6.4 3.3-3.3zM7 10a3 3 0 1 1 6 0 3 3 0 0 1-6 0z"/></svg>
+		</div>
+		<div class="skill-title">Tool Proficiency</div>
+	  </div>
+
+	  <div class="skill-card">
+		<div class="skill-icon" aria-hidden="true">
+		  <svg viewBox="0 0 24 24"><path d="M7 2v2H5a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2V6a2 2 0 0 0-2-2h-2V2h-2v2H9V2H7zm12 6H5v10h14V8z"/></svg>
+		</div>
+		<div class="skill-title">Planning & Organizing</div>
+	  </div>
+
+	  <div class="skill-card">
+		<div class="skill-icon" aria-hidden="true">
+		  <svg viewBox="0 0 24 24"><path d="M4 4h14v4H6L4 10V4zm0 8h6v2H4v-2zm0 4h10v2H4v-2zm14.7-7.3-1.4-1.4-6.9 6.9V19h2.8l5.5-5.5z"/></svg>
+		</div>
+		<div class="skill-title">Content Writing</div>
+	  </div>
+	</div>
+	<br><br>
+	<h2>My Hobbies</h2>
+	<p> I love traveling because it allows me to experience new cultures, meet inspiring people, and see the world from different perspectives. Each journey gives me stories, memories, and lessons that shape how I think and create. Music is another big part of my life, it keeps me calm, inspired, and focused, whether I’m working, relaxing, or reflecting. Together, they remind me to stay curious, creative, and open-minded every day.
+	</p>
+  </section>
+
+  <!-- =========================
+       Projects / Carousel
+  ========================= -->
+  <section id="works" class="works">
+    <h2>My Projects</h2>
+
+    <div class="carousel" id="projCarousel">
+      <div class="slide">
+        <img src="images/w.5.png" alt="Work 5"/>
+        <h4>Generation gap between parents and children: Causes and Solutions</h4>
+      </div>
+      <div class="slide">
+        <img src="images/w.1.jpg" alt="Work 1"/>
+        <h4>Seasons of Change: <br> A Magical Journey</h4>
+      </div>
+      <div class="slide">
+        <img src="images/w.2.jpg" alt="Work 2"/>
+        <h4>Project: Memory</h4>
+      </div>
+      <div class="slide">
+        <img src="images/w.3.jpg" alt="Work 3"/>
+        <h4>Weaving the Dynasty – The Queen Mother’s Coronation Revival</h4>
+      </div>
+      <div class="slide">
+        <img src="images/w.4.jpg" alt="Work 4"/>
+        <h4>Smart Pill Reminder Box</h4>
+      </div>
+	  <div class="slide">
+        <img src="images/w.5.png" alt="Work 5"/>
+        <h4>Generation gap between parents and children: Causes and Solutions</h4>
+      </div>
+      <div class="slide">
+        <img src="images/w.1.jpg" alt="Work 1"/>
+        <h4>Seasons of Change: <br> A Magical Journey</h4>
+      </div>
+    </div>
+  </section>
+	<!-- =========================
+		 Contact Section
+	========================= -->
+	<section id="contact" class="contact">
+	  <h2>Contact Me</h2>
+	  <p>If you’d like to collaborate, share ideas, or just say hi, feel free to reach out!</p>
+
+	  <div class="contact-container">
+		<div class="contact-info">
+		  <p><strong>Email:</strong> <a href="mailto:duong.do.240185@student.fulbright.edu.vn">duong.do.240185@student.fulbright.edu.vn</a></p>
+		  <p><strong>Phone:</strong> +84 888 150 306</p>
+		  <p><strong>Location:</strong> Ho Chi Minh City, Vietnam</p>
+		</div>
+	  </div>
+	</section>
+	<!-- =========================
+		 Notebook
+	========================= -->
+	<section id="notebook" class="notebook">
+	  <h2>My Personal Notebook</h2>
+	  <p>Type your note and click “Add Note”. Notes are not saved after page reload.</p>
+
+	  <div class="nb-input">
+		<textarea id="nbText" rows="4" placeholder="Write your note here..."></textarea>
+		<div class="nb-actions">
+		  <button id="nbAddBtn" type="button">Add Note</button>
+		  <span class="nb-hint">Tip: Press <kbd>Ctrl</kbd>+<kbd>Enter</kbd> to add</span>
+		</div>
+	  </div>
+
+	  <h3 class="nb-subtitle">Notes:</h3>
+	  <div id="nbList" class="nb-list" aria-live="polite"></div>
+	</section>
+
+  <!-- =========================
+       Footer
+  ========================= -->
+  <footer id="contact">
+    <p><strong>© Do Anh Duong Portfolio 2025</strong></p>
+  </footer>
+
+  <!-- =========================
+       Scripts
+  ========================= -->
+ <script>
+document.addEventListener("DOMContentLoaded", function () {
+  /* ========== HEADER HIDE/SHOW ON SCROLL ========== */
+  const header = document.getElementById("mainHeader");
+  let lastY = window.scrollY || 0;
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > lastY && window.scrollY > 100) {
+      header.classList.add("hidden");
+    } else {
+      header.classList.remove("hidden");
+    }
+    lastY = window.scrollY;
+  });
+
+  /* ========== ABOUT ME BUTTON SCROLL ========== */
+  const hireBtn = document.getElementById("hireBtn");
+  if (hireBtn) {
+    hireBtn.addEventListener("click", () =>
+      document.getElementById("about")?.scrollIntoView({ behavior: "smooth" })
+    );
+  }
+
+
+  /* ========== CAROUSEL (loop slide 2→5) only when visible ========== */
+  const carousel = document.getElementById("projCarousel");
+  const worksSection = document.getElementById("works");
+  if (!carousel || !worksSection) return;
+
+  const slides = Array.from(carousel.children);
+  const startIndex = 1, endIndex = 5;
+  const interval = 3000, pauseLast = 2000;
+  const targets = slides.slice(startIndex, endIndex + 1);
+
+  let k = 0;
+  let timer = null;
+  let isVisible = false;
+
+  function scrollToEl(el, smooth) {
+    if (!el) return;
+    carousel.scrollTo({
+      left: el.offsetLeft - carousel.offsetLeft - carousel.clientWidth / 2 + el.clientWidth / 2,
+      behavior: smooth ? "smooth" : "auto"
+    });
+  }
+
+  function playNext() {
+    if (!isVisible) return; // nếu không thấy thì dừng
+    const el = targets[k];
+    scrollToEl(el, true);
+    const delay = (k === targets.length - 1) ? pauseLast : interval;
+    k = (k + 1) % targets.length;
+    timer = setTimeout(playNext, delay);
+  }
+
+  function startCarousel() {
+    if (!timer && isVisible) {
+      timer = setTimeout(playNext, 500);
+    }
+  }
+
+  function stopCarousel() {
+    clearTimeout(timer);
+    timer = null;
+  }
+
+  // Khi hover thì dừng tạm
+  carousel.addEventListener("mouseenter", stopCarousel);
+  carousel.addEventListener("mouseleave", startCarousel);
+
+  // Re-align khi resize
+  window.addEventListener("resize", () => {
+    if (!isVisible) return;
+    const currentIdx = (k - 1 + targets.length) % targets.length;
+    scrollToEl(targets[currentIdx], false);
+  });
+
+  // Scale nhẹ slide giữa
+  carousel.addEventListener("scroll", () => {
+    const rect = carousel.getBoundingClientRect();
+    const centerX = rect.left + rect.width / 2;
+    slides.forEach((s) => {
+      const r = s.getBoundingClientRect();
+      const cx = r.left + r.width / 2;
+      const d = Math.abs(centerX - cx);
+      const scale = 1 - Math.min(d / 900, 0.15);
+      s.style.transform = "scale(" + scale + ")";
+      s.style.transition = "transform .25s";
+    });
+  });
+
+  /* ========== INTERSECTION OBSERVER: chỉ chạy khi thấy #works ========== */
+  const observer = new IntersectionObserver(
+    (entries) => {
+      entries.forEach((entry) => {
+        if (entry.isIntersecting) {
+          isVisible = true;
+          startCarousel();
+        } else {
+          isVisible = false;
+          stopCarousel();
+        }
+      });
+    },
+    { threshold: 0.5 } // kích hoạt khi 50% section hiện trong viewport
+  );
+
+  observer.observe(worksSection);
+});
+	/* Reveal milestones on scroll */
+(function(){
+  var items = document.querySelectorAll('.reveal');
+  if (!items.length) return;
+  if ('IntersectionObserver' in window){
+    var io = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if (e.isIntersecting){ e.target.classList.add('is-visible'); }
+      });
+    }, { threshold: 0.15 });
+    items.forEach(function(n){ io.observe(n); });
+  }else{
+    // fallback
+    items.forEach(function(n){ n.classList.add('is-visible'); });
+  }
+})();
+  /* ========== CONTACT FORM SUBMIT (demo) ========== */
+
+	document.addEventListener('DOMContentLoaded', function () {
+	  const input = document.getElementById('nbText');
+	  const addBtn = document.getElementById('nbAddBtn');
+	  const list  = document.getElementById('nbList');
+
+	  function addNote(){
+		const text = (input.value || '').trim();
+		if (!text){
+		  alert('Please type your note 🙂');
+		  input.focus();
+		  return;
+		}
+		const item = document.createElement('div');
+		item.className = 'note';
+		item.textContent = text;
+		// prepend để note mới ở trên cùng (có thể đổi thành appendChild nếu muốn dưới cùng)
+		list.prepend(item);
+
+		input.value = '';
+		input.focus();
+	  }
+
+	  addBtn.addEventListener('click', addNote);
+
+	  // Ctrl+Enter để thêm nhanh
+	  input.addEventListener('keydown', (e) => {
+		if (e.key === 'Enter' && (e.ctrlKey || e.metaKey)) {
+		  e.preventDefault();
+		  addNote();
+		}
+	  });
+	});
+</script>
+
+</body>
+</html>
